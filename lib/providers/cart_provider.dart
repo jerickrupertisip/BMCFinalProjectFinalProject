@@ -97,22 +97,28 @@ class CartProvider with ChangeNotifier {
     super.dispose();
   }
 
-  // 6. The main logic: "Add Item to Cart"
-  void addItem(String id, String name, double price) {
-    // 7. Check if the item is already in the cart
+  // 2. THIS IS THE NEW, UPDATED FUNCTION:
+  void addItem(String id, String name, double price, int quantity) {
+    // 3. Check if the item is already in the cart
     var index = _items.indexWhere((item) => item.id == id);
 
     if (index != -1) {
-      // 8. If YES: just increase the quantity
-      _items[index].quantity++;
+      // 4. If YES: Add the new quantity to the existing quantity
+      _items[index].quantity += quantity;
     } else {
-      // 9. If NO: add it to the list as a new item
-      _items.add(CartItem(id: id, name: name, price: price));
+      // 5. If NO: Add the item with the specified quantity
+      _items.add(
+        CartItem(
+          id: id,
+          name: name,
+          price: price,
+          quantity: quantity, // Use the quantity from the parameter
+        ),
+      );
     }
 
-    _saveCart(); // 10. ADD THIS LINE
-    // 10. CRITICAL: This tells all "listening" widgets to rebuild!
-    notifyListeners();
+    _saveCart(); // This is the same
+    notifyListeners(); // This is the same
   }
 
   // 11. The "Remove Item from Cart" logic
