@@ -10,6 +10,7 @@ import 'package:ecommerce_app/screens/cart_screen.dart'; // 2. ADD THIS
 import 'package:provider/provider.dart'; // 3. ADD THIS
 import 'package:ecommerce_app/screens/order_history_screen.dart'; // 1. ADD
 import 'package:ecommerce_app/screens/profile_screen.dart'; // 1. ADD THIS
+import 'package:ecommerce_app/widgets/notification_icon.dart'; // 1. ADD THIS
 
 // Part 2: Widget Definition
 class HomeScreen extends StatefulWidget {
@@ -104,6 +105,10 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
+
+          // 2. --- ADD OUR NEW WIDGET ---
+          const NotificationIcon(),
+          // --- END OF NEW WIDGET ---
 
           // 2. --- ADD THIS NEW BUTTON ---
           IconButton(
