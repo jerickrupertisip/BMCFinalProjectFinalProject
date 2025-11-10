@@ -2,6 +2,7 @@ import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce_app/screens/order_success_screen.dart'; // 1. ADD THIS
+import 'package:ecommerce_app/screens/payment_screen.dart'; // 1. Import PaymentScreen
 
 // 2. Change this to a StatefulWidget
 class CartScreen extends StatefulWidget {
@@ -130,62 +131,29 @@ class _CartScreenState extends State<CartScreen> {
 
           // We'll add a "Checkout" button here in a future module
           const SizedBox(height: 20),
-          // 4. --- ADD THIS NEW BUTTON ---
+          // 6. --- THIS IS THE MODIFIED BUTTON ---
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                minimumSize: const Size.fromHeight(50), // Wide button
+                minimumSize: const Size.fromHeight(50),
               ),
-
-              // 5. Disable button if loading OR if cart is empty
-              onPressed: (_isLoading || cart.items.isEmpty)
+              // 7. Disable if cart is empty, otherwise navigate
+              onPressed: cart.items.isEmpty
                   ? null
-                  : () async {
-                      // 6. Start the loading spinner
-                      setState(() {
-                        _isLoading = true;
-                      });
-
-                      try {
-                        // 7. Get provider (listen: false is for functions)
-                        final cartProvider = Provider.of<CartProvider>(
-                          context,
-                          listen: false,
-                        );
-
-                        // 8. Call our new methods
-                        await cartProvider.placeOrder();
-                        await cartProvider.clearCart();
-
-                        // 9. Navigate to success screen
-                        Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => const OrderSuccessScreen(),
+                  : () {
+                      // 8. Navigate to our new PaymentScreen
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => PaymentScreen(
+                            // 9. Pass the final VAT-inclusive total
+                            totalAmount: cart.totalPriceWithVat,
                           ),
-                          (route) => false,
-                        );
-                      } catch (e) {
-                        // 10. Show error if placeOrder() fails
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Failed to place order: $e')),
-                        );
-                      } finally {
-                        // 11. ALWAYS stop the spinner
-                        if (mounted) {
-                          setState(() {
-                            _isLoading = false;
-                          });
-                        }
-                      }
+                        ),
+                      );
                     },
-
-              // 12. Show spinner or text based on loading state
-              child: _isLoading
-                  ? const CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    )
-                  : const Text('Place Order'),
+              // 10. No more spinner!
+              child: const Text('Proceed to Payment'),
             ),
           ),
         ],
