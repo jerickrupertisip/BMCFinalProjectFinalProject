@@ -78,9 +78,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   // 6. This is the "Logout" logic
   Future<void> _signOut() async {
+    // 2. Get the Navigator *before* the async call
+    //    (This avoids a "don't use BuildContext" warning)
+    final navigator = Navigator.of(context);
+
     // This will be heard by the AuthWrapper, which will
     // automatically navigate the user to the LoginScreen.
     await _auth.signOut();
+
+    // 4. --- THIS IS THE FIX ---
+    //    After signing out, pop all screens until we are
+    //    back at the very first screen (which is our AuthWrapper).
+    //    The AuthWrapper will then correctly show the LoginScreen.
+    navigator.popUntil((route) => route.isFirst);
   }
 
   @override
