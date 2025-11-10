@@ -76,10 +76,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // 1. Use the _currentUser variable we defined
-        title: Text(
-          _currentUser != null ? 'Welcome, ${_currentUser!.email}' : 'Home',
+        // 1. --- THIS IS THE CHANGE ---
+        //    DELETE your old title:
+        /*
+        title: Text(_currentUser != null ? 'Welcome!' : 'Home'),
+        */
+
+        // 2. ADD this new title:
+        title: Image.asset(
+          'assets/images/app_logo.png', // 3. The path to your logo
+          height: 40, // 4. Set a fixed height
         ),
+
+        // 5. 'centerTitle' is now handled by our global AppBarTheme
+
+        // --- END OF CHANGE ---
         actions: [
           // 1. --- ADD THIS NEW WIDGET ---
           // This is a special, efficient way to use Provider
