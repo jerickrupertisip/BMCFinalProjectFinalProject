@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (doc.exists && doc.data() != null) {
         // 9. ...call setState() to save the role to our variable
         setState(() {
-          _userRole = doc.data()!['role'];
+          _userRole = doc.data()!['role'] ?? 'user';
         });
       }
     } catch (e) {
