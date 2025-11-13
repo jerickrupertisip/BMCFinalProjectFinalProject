@@ -1,7 +1,9 @@
 import 'package:ecommerce_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // 1. Add Firebase Auth import
-import 'package:cloud_firestore/cloud_firestore.dart'; // 1. ADD THIS IMPORT
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../widgets/theme_toggle_button.dart'; // 1. ADD THIS IMPORT
 
 // 1. Create a StatefulWidget
 class SignUpScreen extends StatefulWidget {
@@ -81,7 +83,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('eCommerce')),
+      appBar: AppBar(
+        title: const Text('eCommerce'),
+        leading: ThemeToggleButton(),
+      ),
 
       // Center the entire form
       body: Center(

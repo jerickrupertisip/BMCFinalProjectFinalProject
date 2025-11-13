@@ -1,3 +1,4 @@
+import '../widgets/theme_toggle_button.dart';
 import 'signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // 1. Add Firebase Auth import
@@ -85,7 +86,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('eCommerce')),
+      appBar: AppBar(
+        title: const Text('eCommerce'),
+        leading: ThemeToggleButton(),
+      ),
 
       // The Center widget centers its child both vertically and horizontally
       body: Center(

@@ -13,6 +13,8 @@ import 'package:ecommerce_app/screens/profile_screen.dart'; // 1. ADD THIS
 import 'package:ecommerce_app/widgets/notification_icon.dart'; // 1. ADD THIS
 import 'package:ecommerce_app/screens/chat_screen.dart';
 
+import '../widgets/theme_toggle_button.dart';
+
 // Part 2: Widget Definition
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -88,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 40, // 4. Set a fixed height
         ),
 
-        // 5. 'centerTitle' is now handled by our global AppBarTheme
+        leading: ThemeToggleButton(),
 
         // --- END OF CHANGE ---
         actions: [
