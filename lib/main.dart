@@ -9,13 +9,6 @@ import 'package:ecommerce_app/providers/cart_provider.dart'; // 1. ADD THIS
 import 'package:provider/provider.dart'; // 2. ADD THIS
 import 'package:google_fonts/google_fonts.dart'; // 1. ADD THIS IMPORT
 
-// 2. --- ADD OUR NEW APP COLOR PALETTE ---
-const Color kRichBlack = Color(0xFF0F0F14); // Tokyonight Day Ink Black
-const Color kBrown = Color(0xFF2D79C7); // Tokyonight Day Country Blue
-const Color kLightBrown = Color(0xFF73DACA); // Tokyonight Day Light Green
-const Color kOffWhite = Color(0xFFD5D6DB); // Tokyonight Day Almost White
-// --- END OF COLOR PALETTE ---
-
 void main() async {
   // 1. Preserve the splash screen
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -51,66 +44,87 @@ class MyApp extends StatelessWidget {
 
       // 1. --- THIS IS THE NEW, COMPLETE THEME ---
       theme: ThemeData(
-        // 2. Set the main color scheme
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: kBrown,
-          // Our new primary color
-          brightness: Brightness.light,
-          primary: kBrown,
-          onPrimary: Colors.white,
-          secondary: kLightBrown,
-          background: kOffWhite, // Our new app background
-        ),
         useMaterial3: true,
+        brightness: Brightness.dark,
 
-        // 3. Set the background color for all screens
-        scaffoldBackgroundColor: kOffWhite,
+        // 1. Color Scheme (Tokyo Night palette)
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF7AA2F7),
+          // Blue accent
+          brightness: Brightness.dark,
+          // Define brightness here ONLY
+          background: const Color(0xFF1A1B26),
+          // Night background
+          surface: const Color(0xFF24283B),
+          // Storm background
+          primary: const Color(0xFF7AA2F7),
+          // Blue
+          secondary: const Color(0xFFBB9AF7),
+          // Magenta accent
+          tertiary: const Color(0xFF73DACA),
+          // Greenish teal
+          error: const Color(0xFFF7768E),
+          // Red
+          onPrimary: const Color(0xFF1A1B26),
+          onSecondary: const Color(0xFF1A1B26),
+          onTertiary: const Color(0xFF1A1B26),
+          onError: Colors.white,
+          onBackground: const Color(0xFFA9B1D6),
+          // Text color
+          onSurface: const Color(0xFFC0CAF5), // General text
+        ),
 
-        // 4. --- (FIX) APPLY THE GOOGLE FONT ---
-        // This applies "Lato" to all text in the app
-        textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
+        // 2. Scaffold background
+        scaffoldBackgroundColor: const Color(0xFF1A1B26),
 
-        // 5. --- (FIX) GLOBAL BUTTON STYLE ---
+        // 3. Global font
+        textTheme: GoogleFonts.latoTextTheme().apply(
+          bodyColor: const Color(0xFFA9B1D6),
+          displayColor: const Color(0xFFC0CAF5),
+        ),
+
+        // 4. Buttons
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: kBrown, // Use our new brown
-            foregroundColor: Colors.white, // Text color
+            backgroundColor: const Color(0xFF7AA2F7), // Primary blue
+            foregroundColor: const Color(0xFF1A1B26), // Text on button
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12), // Rounded corners
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
         ),
 
-        // 6. --- (FIX) GLOBAL TEXT FIELD STYLE ---
+        // 5. Input fields
         inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: const Color(0xFF24283B),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: Colors.grey[400]!),
+            borderSide: const BorderSide(color: Color(0xFF414868)),
           ),
-          labelStyle: TextStyle(color: kBrown.withOpacity(0.8)),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: kBrown, width: 2.0),
+            borderSide: const BorderSide(color: Color(0xFF7AA2F7), width: 2.0),
           ),
+          labelStyle: const TextStyle(color: Color(0xFFA9B1D6)),
         ),
 
-        // 7. --- (FIX) GLOBAL CARD STYLE ---
+        // 6. Cards
         cardTheme: CardThemeData(
-          elevation: 1, // A softer shadow
-          color: Colors.white, // Pure white cards on the off-white bg
+          color: const Color(0xFF24283B),
+          elevation: 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          // 8. This ensures the images inside the card are rounded
           clipBehavior: Clip.antiAlias,
         ),
 
-        // 9. --- (NEW) GLOBAL APPBAR STYLE ---
+        // 7. App bar
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white, // Clean white AppBar
-          foregroundColor: kRichBlack, // Black icons and text
-          elevation: 0, // No shadow, modern look
+          backgroundColor: Color(0xFF24283B),
+          foregroundColor: Color(0xFFC0CAF5),
+          elevation: 0,
           centerTitle: true,
         ),
       ),

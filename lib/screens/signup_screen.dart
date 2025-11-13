@@ -78,107 +78,112 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // 1. A Scaffold provides the basic screen structure
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign Up')),
-      // 2. SingleChildScrollView prevents the keyboard from
-      //    causing a "pixel overflow" error
-      body: SingleChildScrollView(
+      appBar: AppBar(title: const Text('eCommerce')),
+
+      // Center the entire form
+      body: Center(
         child: Padding(
-          // 3. Add padding around the form
           padding: const EdgeInsets.all(16.0),
-          // 4. The Form widget acts as a container for our fields
           child: Form(
-            key: _formKey, // 5. Assign our key to the Form
-            // 6. A Column arranges its children vertically
-            child: Column(
-              // 7. Center the contents of the column
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // 1. A spacer
-                const SizedBox(height: 20),
+            key: _formKey,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: 280,
+                maxWidth: screenWidth < 500 ? screenWidth : 400,
+              ),
 
-                // 2. The Email Text Field
-                TextFormField(
-                  controller: _emailController, // 3. Link the controller
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(), // 4. Nice border
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // keeps the column compact
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // 🟦 1. Big "Login" title
+                  const Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontSize: 36, // big and bold
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFC0CAF5), // Tokyo Night text color
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  keyboardType:
-                      TextInputType.emailAddress, // 5. Show '@' on keyboard
-                  // 6. Validator function
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!value.contains('@')) {
-                      return 'Please enter a valid email';
-                    }
-                    return null; // 'null' means the input is valid
-                  },
-                ),
-
-                // 7. A spacer
-                const SizedBox(height: 16),
-
-                // 8. The Password Text Field
-                TextFormField(
-                  controller: _passwordController, // 9. Link the controller
-                  obscureText: true, // 10. This hides the password
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
-                  ),
-                  // 11. Validator function
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
-                    }
-                    return null;
-                  },
-                ),
-                // 1. A spacer
-                const SizedBox(height: 20),
-
-                // 2. The Login Button
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(50), // 3. Make it wide
+                  const SizedBox(height: 32), // space below title
+                  // Email field
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      if (!value.contains('@')) {
+                        return 'Please enter a valid email';
+                      }
+                      return null;
+                    },
                   ),
 
-                  // 1. Call our new _signUp function
-                  onPressed: _signUp,
+                  const SizedBox(height: 16),
 
-                  child: _isLoading
-                      ? const CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white,
-                          ),
-                        )
-                      : const Text('Sign Up'),
-                ),
+                  // Password field
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      if (value.length < 6) {
+                        return 'Password must be at least 6 characters';
+                      }
+                      return null;
+                    },
+                  ),
 
-                // 6. A spacer
-                const SizedBox(height: 10),
+                  const SizedBox(height: 20),
 
-                // 7. The "Sign Up" toggle button
-                TextButton(
-                  onPressed: () {
-                    // 3. Navigate BACK to the Login screen
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ),
-                    );
-                  },
-                  // CHANGE 4
-                  child: const Text("Already have an account? Login"),
-                ),
-              ],
+                  // Sign Up button
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(
+                        50,
+                      ), // make button full width
+                    ),
+                    onPressed: _signUp,
+                    child: _isLoading
+                        ? const CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white,
+                            ),
+                          )
+                        : const Text('Sign Up'),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  // "Already have an account?" link
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text("Already have an account? Login"),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
