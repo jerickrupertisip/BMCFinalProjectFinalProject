@@ -108,7 +108,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(
                       fontSize: 36, // big and bold
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFC0CAF5), // Tokyo Night text color
                     ),
                     textAlign: TextAlign.center,
                   ),

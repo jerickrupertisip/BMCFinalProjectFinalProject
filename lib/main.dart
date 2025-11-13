@@ -1,35 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
-// 1. Import the native splash package
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'screens/auth_wrapper.dart'; // 1. Import AuthWrapper
-import 'package:ecommerce_app/providers/cart_provider.dart'; // 1. ADD THIS
-import 'package:provider/provider.dart'; // 2. ADD THIS
-import 'package:google_fonts/google_fonts.dart'; // 1. ADD THIS IMPORT
+import 'screens/auth_wrapper.dart';
+import 'package:ecommerce_app/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
-  // 1. Preserve the splash screen
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  // 2. Initialize Firebase (from Module 1)
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // 1. This is the line we're changing
-
   runApp(
-    // 2. We wrap our app in the provider
     ChangeNotifierProvider(
-      // 3. This "creates" one instance of our cart
       create: (context) => CartProvider(),
-      // 4. The child is our normal app
       child: const MyApp(),
     ),
   );
 
-  // 4. Remove the splash screen after app is ready
   FlutterNativeSplash.remove();
 }
 
@@ -42,94 +32,111 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'eCommerce App',
 
-      // 1. --- THIS IS THE NEW, COMPLETE THEME ---
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
 
-        // 1. Color Scheme (Tokyo Night palette)
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF7AA2F7),
-          // Blue accent
-          brightness: Brightness.dark,
-          // Define brightness here ONLY
-          background: const Color(0xFF1A1B26),
-          // Night background
-          surface: const Color(0xFF24283B),
-          // Storm background
-          primary: const Color(0xFF7AA2F7),
+        // 🌻 Gruvbox Light Color Scheme
+        colorScheme: ColorScheme(
+          brightness: Brightness.light,
+          primary: const Color(0xFF458588),
           // Blue
-          secondary: const Color(0xFFBB9AF7),
-          // Magenta accent
-          tertiary: const Color(0xFF73DACA),
-          // Greenish teal
-          error: const Color(0xFFF7768E),
+          onPrimary: const Color(0xFFfbf1c7),
+          // Light background on blue
+          secondary: const Color(0xFFb16286),
+          // Purple
+          onSecondary: const Color(0xFFfbf1c7),
+          tertiary: const Color(0xFF689d6a),
+          // Aqua
+          onTertiary: const Color(0xFFfbf1c7),
+          error: const Color(0xFFcc241d),
           // Red
-          onPrimary: const Color(0xFF1A1B26),
-          onSecondary: const Color(0xFF1A1B26),
-          onTertiary: const Color(0xFF1A1B26),
-          onError: Colors.white,
-          onBackground: const Color(0xFFA9B1D6),
-          // Text color
-          onSurface: const Color(0xFFC0CAF5), // General text
+          onError: const Color(0xFFfbf1c7),
+          background: const Color(0xFFfbf1c7),
+          // bg0
+          onBackground: const Color(0xFF3c3836),
+          // fg1
+          surface: const Color(0xFFf2e5bc),
+          // bg0_s
+          onSurface: const Color(0xFF3c3836),
+          // fg
+          surfaceContainerHighest: const Color(0xFFebdbb2),
+          // bg1
+          surfaceContainerLow: const Color(0xFFf9f5d7),
+          // bg0_h
+          outline: const Color(0xFFa89984), // bg4
         ),
 
-        // 2. Scaffold background
-        scaffoldBackgroundColor: const Color(0xFF1A1B26),
+        scaffoldBackgroundColor: const Color(0xFFfbf1c7),
+        // bg0
 
-        // 3. Global font
+        // 🪶 Fonts
         textTheme: GoogleFonts.latoTextTheme().apply(
-          bodyColor: const Color(0xFFA9B1D6),
-          displayColor: const Color(0xFFC0CAF5),
+          bodyColor: const Color(0xFF3c3836), // fg
+          displayColor: const Color(0xFF282828), // fg0
         ),
 
-        // 4. Buttons
+        // 🎨 Elevated Buttons
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF7AA2F7), // Primary blue
-            foregroundColor: const Color(0xFF1A1B26), // Text on button
+            backgroundColor: const Color(0xFF458588),
+            // primary blue
+            foregroundColor: const Color(0xFFfbf1c7),
+            // text on button
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
+            textStyle: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
 
-        // 5. Input fields
+        // ✏️ Input Fields
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: const Color(0xFF24283B),
+          fillColor: const Color(0xFFf2e5bc),
+          // bg0_s
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Color(0xFF414868)),
+            borderSide: const BorderSide(color: Color(0xFFbdae93)), // bg3
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Color(0xFF7AA2F7), width: 2.0),
+            borderSide: const BorderSide(color: Color(0xFF458588), width: 2.0),
           ),
-          labelStyle: const TextStyle(color: Color(0xFFA9B1D6)),
+          labelStyle: const TextStyle(color: Color(0xFF504945)),
+          // fg2
+          hintStyle: const TextStyle(color: Color(0xFF7c6f64)), // fg4
         ),
 
-        // 6. Cards
+        // 🃏 Cards
         cardTheme: CardThemeData(
-          color: const Color(0xFF24283B),
+          color: const Color(0xFFf2e5bc),
+          // bg0_s
           elevation: 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
           clipBehavior: Clip.antiAlias,
+          shadowColor: const Color(0xFFa89984),
         ),
 
-        // 7. App bar
+        // 📚 App Bar
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF24283B),
-          foregroundColor: Color(0xFFC0CAF5),
+          backgroundColor: Color(0xFFebdbb2),
+          // bg1
+          foregroundColor: Color(0xFF3c3836),
+          // fg1
           elevation: 0,
           centerTitle: true,
+          titleTextStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Color(0xFF3c3836),
+          ),
         ),
       ),
 
-      // --- END OF NEW THEME ---
       home: const AuthWrapper(),
     );
   }
